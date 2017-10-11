@@ -1,0 +1,5 @@
+/Renderer/.vs/Renderer/v14/*.suo
+/Renderer/*.db
+/Renderer/Renderer/*.vcxproj
+/Renderer/Renderer/*.filters
+/Renderer/ipch/RENDERER-7e6a848f/*.ipch
