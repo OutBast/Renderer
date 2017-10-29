@@ -7,8 +7,7 @@
 
 #include "targetver.h"
 
-#include <stdio.h>
-#include <tchar.h>
+#define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
 
 
@@ -24,8 +23,3 @@ using namespace std;
 #include <array>
 
 #include "MathLibrary.h"
-#include "float2.h"
-#include "float3.h"
-#include "float4.h"
-#include "float4x4.h"
-#include "int3.h"
