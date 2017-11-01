@@ -25,12 +25,12 @@ public:
 	int MaxY() const { return m_MaxY; }
 	void MaxY(int val) { m_MaxY = val; }
 
+	vector<uint> m_Color;
+	vector<float> m_Depth;
 protected:
 	void CalculateLength();
 	void SetSize();
 
-	vector<uint> m_Color;
-	vector<float> m_Depth;
 	int m_Width, m_Height, m_MinX, m_MaxX, m_MinY, m_MaxY, m_Length;
 };
 
