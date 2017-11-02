@@ -94,6 +94,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,21 +136,21 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Renderer\float2.h" />
-    <ClInclude Include="..\Renderer\float3.h" />
-    <ClInclude Include="..\Renderer\float4.h" />
-    <ClInclude Include="..\Renderer\float4x4.h" />
-    <ClInclude Include="..\Renderer\int3.h" />
+    <ClInclude Include="float2.h" />
+    <ClInclude Include="float3.h" />
+    <ClInclude Include="float4.h" />
+    <ClInclude Include="float4x4.h" />
+    <ClInclude Include="int3.h" />
     <ClInclude Include="MathLibrary.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Renderer\float2.cpp" />
-    <ClCompile Include="..\Renderer\float3.cpp" />
-    <ClCompile Include="..\Renderer\float4.cpp" />
-    <ClCompile Include="..\Renderer\float4x4.cpp" />
-    <ClCompile Include="..\Renderer\int3.cpp" />
+    <ClCompile Include="float2.cpp" />
+    <ClCompile Include="float3.cpp" />
+    <ClCompile Include="float4.cpp" />
+    <ClCompile Include="float4x4.cpp" />
+    <ClCompile Include="int3.cpp" />
     <ClCompile Include="MathLibrary.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -27,19 +27,19 @@
     <ClInclude Include="MathLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Renderer\float2.h">
+    <ClInclude Include="float2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Renderer\float3.h">
+    <ClInclude Include="float3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Renderer\float4.h">
+    <ClInclude Include="float4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Renderer\float4x4.h">
+    <ClInclude Include="float4x4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Renderer\int3.h">
+    <ClInclude Include="int3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,19 +50,19 @@
     <ClCompile Include="MathLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Renderer\float2.cpp">
+    <ClCompile Include="float2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Renderer\float3.cpp">
+    <ClCompile Include="float3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Renderer\float4.cpp">
+    <ClCompile Include="float4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Renderer\float4x4.cpp">
+    <ClCompile Include="float4x4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Renderer\int3.cpp">
+    <ClCompile Include="int3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
