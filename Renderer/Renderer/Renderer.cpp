@@ -8,7 +8,7 @@
 
 int main()
 {
-    TgaBuffer buffer1 = TgaBuffer(512, 512);
+    TgaBuffer buffer1 = TgaBuffer(1024, 1024);
     buffer1.ClearColor(0x00000000); /// ARGB
 
     cout << hex << ColorToUint(float3(1.0f, 0.0f, 0.0f)) << endl;
