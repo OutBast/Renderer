@@ -40,14 +40,19 @@ float3::float3(const float3 &value) : x(value.x), y(value.y), z(value.z)
 float3::~float3()
 { }
 
-float float3::Magnitude()
+float float3::Magnitude() const
 {
 	return sqrt(sqr(x) + sqr(y) + sqr(z));
 }
 
-float float3::Magnitude(float3 &value)
+float float3::Magnitude(const float3 &value)
 {
 	return sqrt(sqr(value.x) + sqr(value.y) + sqr(value.z));
+}
+
+float float3::Magnitude()
+{
+    return sqrt(sqr(x) + sqr(y) + sqr(z));
 }
 
 float float3::SqrMagnitude()
@@ -55,7 +60,7 @@ float float3::SqrMagnitude()
 	return sqr(x) + sqr(y) + sqr(z);
 }
 
-float float3::SqrMagnitude(float3 &value)
+float float3::SqrMagnitude(const float3 &value)
 {
 	return sqr(value.x) + sqr(value.y) + sqr(value.z);
 }
@@ -69,15 +74,16 @@ void float3::Normalize()
 	z /= length;
 }
 
-float3 float3::Normalize(float3 &value)
+float3 float3::Normalize(const float3 &value)
 {
 	float length = Magnitude(value);
+    float3 normalized = value;
 
-	value.x /= length;
-	value.y /= length;
-	value.z /= length;
+    normalized.x /= length;
+    normalized.y /= length;
+    normalized.z /= length;
 
-	return value;
+	return normalized;
 }
 
 float3 float3::Reflect(float3 &normal)
@@ -88,12 +94,12 @@ float3 float3::Reflect(float3 &normal)
 	return reflectedVector;
 }
 
-float3 float3::Reflect(float3 &direction, float3 &normal)
+float3 float3::Reflect(const float3 &direction, const float3 &normal)
 {
 	return float3(direction - (2.0f * Dot(direction, normal) * normal));
 }
 
-float3 float3::Refract(float inFactor, float outFactor, float3 direction, float3 normal)
+float3 float3::Refract(float inFactor, float outFactor, const float3& direction, const float3& normal)
 {
 	float n = inFactor / outFactor;
 	float dotDN = Dot(direction, normal);
@@ -140,7 +146,7 @@ void float3::Set(float new_x, float new_y, float new_z)
 	z = new_z;
 }
 
-float float3::Angle(float3 &from, float3 &to)
+float float3::Angle(const float3 &from, const float3 &to)
 {
 
 	return RadiansToDegrees(acos(Dot(from, to) / (from.Magnitude() * to.Magnitude())));
@@ -151,7 +157,7 @@ float float3::Angle(float3 &rhs)
 	return RadiansToDegrees(acos(Dot(rhs) / (Magnitude() * rhs.Magnitude())));
 }
 
-float3 float3::Cross(float3 &a, float3 &b)
+float3 float3::Cross(const float3 &a, const float3 &b)
 {
 	return float3((a.y * b.z - a.z * b.y), (a.z * b.x - a.x * b.z), (a.x * b.y - a.y * b.x));
 }
@@ -161,7 +167,7 @@ float3 float3::Cross(float3 &rhs)
 	return float3((y * rhs.z - z * rhs.y), (z * rhs.x - x * rhs.z), (x * rhs.y - y * rhs.x));
 }
 
-float float3::Distance(float3 &from, float3 &to)
+float float3::Distance(const float3 &from, const float3 &to)
 {
 	return sqrt(sqr(from.x - to.x) + sqr(from.y - to.y) + sqr(from.z - to.z));
 }
@@ -171,7 +177,7 @@ float float3::Distance(float3 &rhs)
 	return sqrt(sqr(x - rhs.x) + sqr(y - rhs.y) + sqr(z - rhs.z));
 }
 
-float float3::Dot(float3 &a, float3 &b)
+float float3::Dot(const float3 &a, const float3 &b)
 {
 	return ((a.x * b.x) + (a.y * b.y) + (a.z * b.z));
 }

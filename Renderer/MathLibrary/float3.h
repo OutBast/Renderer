@@ -14,15 +14,15 @@ public:
 	static float3 zero;
 	static float3 one;
 
-	static float Angle(float3 &from, float3 &to);
-	static float3 Cross(float3 &a, float3 &b);
-	static float Distance(float3 &from, float3 &to);
-	static float Dot(float3 &a, float3 &b);
-	static float Magnitude(float3 &value);
-	static float SqrMagnitude(float3 &value);
-	static float3 Normalize(float3 &value);
-	static float3 Reflect(float3 &direction, float3 &normal);
-	static float3 Refract(float inFactor, float outFactor, float3 direction, float3 normal);
+	static float Angle(const float3 &from, const float3 &to);
+	static float3 Cross(const float3 &a, const float3 &b);
+	static float Distance(const float3 &from, const float3 &to);
+	static float Dot(const float3 &a, const float3 &b);
+	static float Magnitude(const float3 &value);
+	static float SqrMagnitude(const float3 &value);
+	static float3 Normalize(const float3 &value);
+	static float3 Reflect(const float3 &direction, const float3 &normal);
+	static float3 Refract(float inFactor, float outFactor, const float3& direction, const float3& normal);
 	static float3 Reverse(const float3 &value);
 #pragma endregion Static & Const
 
@@ -35,8 +35,9 @@ public:
 	~float3();
 
 	float Angle(float3 &rhs);
-	float Distance(float3 &rhs);
-	float Magnitude();
+    float Distance(float3 &rhs);
+    float Magnitude();
+	float Magnitude() const;
 	float SqrMagnitude();
 	float Dot(float3 &rhs);
 	float3 Cross(float3 &rhs);
