@@ -10,6 +10,7 @@ public:
     float4(float x, float y, float z);
     float4(float x, float y, float z, float w);
     float4(const float3& val);
+    float4(const float3& val, float w);
     ~float4();
 
 
@@ -19,6 +20,21 @@ public:
 #pragma region Overloaded Operators
     float& operator[] (size_t n) { return v[n]; }
     const float& operator[] (size_t n) const { return v[n]; }
+
+    float4& operator=(const float4 &rhs);
+    float4& operator+=(const float4 &rhs);
+    float4& operator-=(const float4 &rhs);
+    float4 operator-() const;
+    float4& operator*=(const float4 &rhs);
+    float4& operator/=(const float4 &rhs);
+    float4& operator*=(const float &rhs);
+    float4& operator/=(const float &rhs);
+    float4& operator+=(const float &rhs);
+    float4& operator-=(const float &rhs);
+
+    friend bool operator==(const float4 &lhs, const float4 &rhs);
+    friend std::ostream &operator<<(std::ostream &os, const float4 &value);
+    friend std::istream &operator >> (std::istream &is, float4 &value);
 #pragma endregion Overloaded Operators
 
 #pragma region Getters & Setters
@@ -40,7 +56,6 @@ public:
     void A(float val) { a = val; }
 #pragma endregion Getters & Setters
 
-private:
     union
     {
         struct
@@ -57,3 +72,13 @@ private:
     };
 };
 
+
+float4 operator+(const float4 &lhs, const float4 &rhs);
+float4 operator-(const float4 &lhs, const float4 &rhs);
+float4 operator-(const float4 &lhs, const float &rhs);
+float4 operator*(const float4 &lhs, const float4 &rhs);
+float4 operator/(const float4 &lhs, const float4 &rhs);
+bool operator!=(const float4 &lhs, const float4 &rhs);
+float4 operator*(const float4 &lhs, const float &rhs);
+float4 operator*(const float &lhs, const float4 &rhs);
+float4 operator/(const float4 &lhs, const float &rhs);

@@ -37,6 +37,14 @@ float3::float3(float x, float y) :
 float3::float3(const float3 &value) : x(value.x), y(value.y), z(value.z)
 { }
 
+float3::float3(float x) :
+    x(x),
+    y(x),
+    z(x)
+{
+
+}
+
 float3::~float3()
 { }
 

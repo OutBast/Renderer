@@ -4,14 +4,11 @@
 
 using namespace std;
 
-Mesh::Mesh() :
-    Primitive(),
-    intersectedTriangle(nullptr)
+Mesh::Mesh() : Primitive()
 { }
 
 Mesh::Mesh(const std::string &fileName, MaterialType typeOfMaterial, const float &scale, const float &n) :
-    Primitive(new Material(fileName, typeOfMaterial, n), true),
-    intersectedTriangle(nullptr)
+    Primitive(new Material(fileName, typeOfMaterial, n))
 {
     LoadMesh(fileName, scale);
 }
@@ -19,6 +16,12 @@ Mesh::Mesh(const std::string &fileName, MaterialType typeOfMaterial, const float
 Mesh::Mesh(const Mesh &mesh) :
     polygons(mesh.Polygons())
 { }
+
+
+Mesh::Mesh(const std::string &fileName, float scale) : Primitive()
+{
+    LoadMesh(fileName, scale);
+}
 
 Mesh::~Mesh()
 {
@@ -291,44 +294,18 @@ void Mesh::LoadMesh(const std::string &fileName, const float &scale)
             radius = distance;
         }
     }
-
-    //boundingSphere = Sphere(center, radius);
 }
 
-bool Mesh::Intersect(Ray &ray, bool photon)
+void Mesh::Draw(Rasterizer& r, VertexProcessor& vp)
 {
-    bool intersected = false;
-    //if (boundingSphere.IntersectBounding(ray))
-    //{
-    //    for (auto &triangle : polygons)
-    //    {
-    //        if (triangle.Intersect(ray))
-    //        {
-    //            material = triangle.material;
-    //            intersected = true;
-    //            intersectedTriangle = &triangle;
-    //        }
-    //    }
-    //}
-    return intersected;
-}
-
-void Mesh::IntersectionOutput(const Ray &ray)
-{
-    cout << "Intersection between Mesh & Ray" << endl;
+    for (auto &triangle : polygons)
+    {
+        r.Triangle(vp.tr(triangle[0]), vp.tr(triangle[1]), vp.tr(triangle[2]),
+            float3(1.0f, 0.0f, 0.0f), float3(0.0f, 1.0f, 0.0f), float3(0.0f, 0.0f, 1.0f));
+    }
 }
 
 Primitive* Mesh::Clone() const
 {
     return new Mesh(*this);
-}
-
-float3 Mesh::LocalIntersectionPoint(const float3 &worldIntersectionPoint, const float& scale)
-{
-    return intersectedTriangle->LocalIntersectionPoint(worldIntersectionPoint, scale);
-}
-
-float3 Mesh::GetUVW(const float3& globalIntersectionPoint)
-{
-    return intersectedTriangle->GetUVW(globalIntersectionPoint);
 }

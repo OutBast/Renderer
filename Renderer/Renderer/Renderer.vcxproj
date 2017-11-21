@@ -157,6 +157,8 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TgaBuffer.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="Vertex.h" />
+    <ClInclude Include="VertexProcessor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Buffer.cpp" />
@@ -174,6 +176,8 @@
     </ClCompile>
     <ClCompile Include="TgaBuffer.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="Vertex.cpp" />
+    <ClCompile Include="VertexProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathLibrary\MathLibrary.vcxproj">

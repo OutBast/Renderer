@@ -27,7 +27,8 @@ public:
 #pragma endregion Static & Const
 
 #pragma region Member Functions & Constructors
-	float3();
+    float3();
+    float3(float x);
 	float3(float x, float y);
 	float3(float x, float y, float z);
 	float3(int x, int y, int z);

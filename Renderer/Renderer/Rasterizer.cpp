@@ -8,7 +8,7 @@ Rasterizer::~Rasterizer()
 { }
 
 void Rasterizer::Triangle(const float3& v1, const float3& v2, const float3& v3,
-                          const float3& c1, const float3& c2, const float3& c3)
+                          const float3& c1 = float3(1.0f, 0.0f, 0.0f), const float3& c2 = float3(0.0f, 1.0f, 0.0f), const float3& c3 = float3(0.0f, 0.0f, 1.0f))
 {
     float y1 = TransformNDCSpaceToScreenSpace(v1.Y(), buffer->Height());
     float y2 = TransformNDCSpaceToScreenSpace(v2.Y(), buffer->Height());
@@ -32,6 +32,11 @@ void Rasterizer::Triangle(const float3& v1, const float3& v2, const float3& v3,
     buffer->MaxX((int)max({ x1, x2, x3 }));
     buffer->MinY((int)min({ y1, y2, y3 }));
     buffer->MaxY((int)max({ y1, y2, y3 }));
+
+    buffer->MinX((int)max(buffer->MinX(), 0));
+    buffer->MaxX((int)min(buffer->MaxX(), buffer->Width() - 1));
+    buffer->MinY((int)max(buffer->MinY(), 0));
+    buffer->MaxY((int)min(buffer->MaxY(), buffer->Height() - 1));
 
     bool tl1 = false, tl2 = false, tl3 = false;
 

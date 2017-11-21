@@ -81,6 +81,11 @@ float4x4::~float4x4()
 {
 }
 
+float3 float4x4::GetPosition()
+{
+    return float3(matrix[3][0], matrix[3][1], matrix[3][2]);
+}
+
 void float4x4::Zero()
 {
     for (uint i = 0; i < 4; ++i)
@@ -529,6 +534,8 @@ float4x4& float4x4::operator-=(const float4x4 &rhs)
             matrix[i][j] -= rhs[i][j];
         }
     }
+
+    return *this;
 }
 
 float4x4 float4x4::operator-() const
@@ -587,11 +594,17 @@ float4x4& float4x4::operator/=(const float4x4 &rhs)
 
 float4x4& float4x4::operator*=(const float4x4 &rhs)
 {
-    for (uint i = 0; i < 4; ++i)
+
+    for (uint i = 0; i < 4; i++)
     {
-        for (uint j = 0; j < 4; ++j)
+        for (uint i2 = 0; i2 < 4; i2++)
         {
-            matrix[i][j] *= rhs[i][j];
+            float Total = 0.0f;
+            for (uint i3 = 0; i3 < 4; i3++)
+            {
+                Total += matrix[i][i3] * rhs[i3][i2];
+            }
+            matrix[i][i2] = Total;
         }
     }
 
@@ -671,17 +684,20 @@ float4x4 operator-(const float4x4 &lhs, const float &rhs)
 
 float4x4 operator*(const float4x4 &lhs, const float4x4 &rhs)
 {
-    float4x4 mtx44;
-
-    for (uint i = 0; i < 4; ++i)
+    float4x4 Result;
+    for (uint i = 0; i < 4; i++)
     {
-        for (uint j = 0; j < 4; ++j)
+        for (uint i2 = 0; i2 < 4; i2++)
         {
-            mtx44[i][j] = lhs[i][j] * rhs[i][j];
+            float Total = 0.0f;
+            for (uint i3 = 0; i3 < 4; i3++)
+            {
+                Total += lhs[i][i3] * rhs[i3][i2];
+            }
+            Result[i][i2] = Total;
         }
     }
-
-    return mtx44;
+    return Result;
 }
 
 float4x4 operator*(const float4x4 &lhs, const float &rhs)
@@ -714,66 +730,64 @@ float4x4 operator*(const float &lhs, const float4x4 &rhs)
     return mtx44;
 }
 
-float4x4 operator*(const float4x4& lhs, const float3& rhs)
+float4 operator*(const float4x4& lhs, const float3& rhs)
 {
-    float4x4 mtx44;
-    float4 tmp = float4(rhs);
-
-    for (uint i = 0; i < 4; ++i)
-    {
-        for (uint j = 0; j < 4; ++j)
-        {
-            mtx44[i][j] = lhs[i][j] * tmp[j];
-        }
-    }
-
-    return mtx44;
+    float4x4 m = lhs;
+    float4 vector = float4(rhs);
+    return float4
+    (
+        m[0][0] * vector.x + m[1][0] * vector.y + m[2][0] * vector.z + m[3][0] * vector.w,
+        m[0][1] * vector.x + m[1][1] * vector.y + m[2][1] * vector.z + m[3][1] * vector.w,
+        m[0][2] * vector.x + m[1][2] * vector.y + m[2][2] * vector.z + m[3][2] * vector.w,
+        m[0][3] * vector.x + m[1][3] * vector.y + m[2][3] * vector.z + m[3][3] * vector.w
+    );
 }
 
-float4x4 operator*(const float4x4& lhs, const float4& rhs)
+float4 operator*(const float4x4& lhs, const float4& rhs)
 {
-    float4x4 mtx44;
+    float4x4 m = lhs;
+    float4 vector = rhs;
 
-    for (uint i = 0; i < 4; ++i)
-    {
-        for (uint j = 0; j < 4; ++j)
-        {
-            mtx44[i][j] = lhs[i][j] * rhs[j];
-        }
-    }
+    float w1 = m[0][0] * vector.x + m[1][0] * vector.y + m[2][0] * vector.z + m[3][0] * vector.w;
+    float w2 = m[0][1] * vector.x + m[1][1] * vector.y + m[2][1] * vector.z + m[3][1] * vector.w;
+    float w3 = m[0][2] * vector.x + m[1][2] * vector.y + m[2][2] * vector.z + m[3][2] * vector.w;
+    float w4 = m[0][3] * vector.x + m[1][3] * vector.y + m[2][3] * vector.z + m[3][3] * vector.w;
+    float4 result = float4(w1, w2, w3, w4);
+    //float4 result = float4
+    //(
+    //    m[0][0] * vector.x + m[1][0] * vector.y + m[2][0] * vector.z + m[3][0] * vector.w,
+    //    m[0][1] * vector.x + m[1][1] * vector.y + m[2][1] * vector.z + m[3][1] * vector.w,
+    //    m[0][2] * vector.x + m[1][2] * vector.y + m[2][2] * vector.z + m[3][2] * vector.w,
+    //    m[0][3] * vector.x + m[1][3] * vector.y + m[2][3] * vector.z + m[3][3] * vector.w
+    //);
 
-    return mtx44;
+    return result;
 }
 
-float4x4 operator*(const float3& lhs, const float4x4& rhs)
+float4 operator*(const float3& lhs, const float4x4& rhs)
 {
-    float4x4 mtx44;
-    float4 tmp = float4(lhs);
-
-    for (uint i = 0; i < 4; ++i)
-    {
-        for (uint j = 0; j < 4; ++j)
-        {
-            mtx44[i][j] = rhs[i][j] * tmp[j];
-        }
-    }
-
-    return mtx44;
+    float4x4 m = rhs;
+    float4 vector = float4(lhs);
+    return float4
+    (
+        m[0][0] * vector.x + m[1][0] * vector.y + m[2][0] * vector.z + m[3][0] * vector.w,
+        m[0][1] * vector.x + m[1][1] * vector.y + m[2][1] * vector.z + m[3][1] * vector.w,
+        m[0][2] * vector.x + m[1][2] * vector.y + m[2][2] * vector.z + m[3][2] * vector.w,
+        m[0][3] * vector.x + m[1][3] * vector.y + m[2][3] * vector.z + m[3][3] * vector.w
+    );
 }
 
-float4x4 operator*(const float4& lhs, const float4x4& rhs)
+float4 operator*(const float4& lhs, const float4x4& rhs)
 {
-    float4x4 mtx44;
-
-    for (uint i = 0; i < 4; ++i)
-    {
-        for (uint j = 0; j < 4; ++j)
-        {
-            mtx44[i][j] = rhs[i][j] * lhs[j];
-        }
-    }
-
-    return mtx44;
+    float4x4 m = rhs;
+    float4 vector = lhs;
+    return float4
+    (
+        m[0][0] * vector.x + m[1][0] * vector.y + m[2][0] * vector.z + m[3][0] * vector.w,
+        m[0][1] * vector.x + m[1][1] * vector.y + m[2][1] * vector.z + m[3][1] * vector.w,
+        m[0][2] * vector.x + m[1][2] * vector.y + m[2][2] * vector.z + m[3][2] * vector.w,
+        m[0][3] * vector.x + m[1][3] * vector.y + m[2][3] * vector.z + m[3][3] * vector.w
+    );
 }
 
 float4x4 operator/(const float4x4 &lhs, const float4x4 &rhs)
@@ -806,66 +820,74 @@ float4x4 operator/(const float4x4 &lhs, const float &rhs)
     return mtx44;
 }
 
-float4x4 operator/(const float4x4& lhs, const float3& rhs)
+float4 operator/(const float4x4& lhs, const float3& rhs)
 {
-    float4x4 mtx44;
+    float4 result;
     float4 tmp = float4(rhs);
 
-    for (uint i = 0; i < 4; ++i)
+    for (uint i = 0; i < 4; i++) 
     {
-        for (uint j = 0; j < 4; ++j)
+        float value = 0.0f;
+        for (uint j = 0; j < 4; j++)
         {
-            mtx44[i][j] = lhs[i][j] / tmp[j];
+            value += lhs[i][j] / tmp[j];
         }
+        result[i] = value;
     }
 
-    return mtx44;
+    return result;
 }
 
-float4x4 operator/(const float4x4& lhs, const float4& rhs)
+float4 operator/(const float4x4& lhs, const float4& rhs)
 {
-    float4x4 mtx44;
+    float4 result;
 
-    for (uint i = 0; i < 4; ++i)
+    for (uint i = 0; i < 4; i++)
     {
-        for (uint j = 0; j < 4; ++j)
+        float value = 0.0f;
+        for (uint j = 0; j < 4; j++)
         {
-            mtx44[i][j] = lhs[i][j] / rhs[j];
+            value += lhs[i][j] / rhs[j];
         }
+        result[i] = value;
     }
 
-    return mtx44;
+    return result;
 }
 
-float4x4 operator/(const float3& lhs, const float4x4& rhs)
+float4 operator/(const float3& lhs, const float4x4& rhs)
 {
-    float4x4 mtx44;
+    float4 result;
     float4 tmp = float4(lhs);
 
-    for (uint i = 0; i < 4; ++i)
+    for (uint i = 0; i < 4; i++)
     {
-        for (uint j = 0; j < 4; ++j)
+        float value = 0.0f;
+        for (uint j = 0; j < 4; j++)
         {
-            mtx44[i][j] = rhs[i][j] / tmp[j];
+            value += rhs[i][j] / tmp[j];
         }
+        result[i] = value;
     }
 
-    return mtx44;
+    return result;
 }
 
-float4x4 operator/(const float4& lhs, const float4x4& rhs)
+float4 operator/(const float4& lhs, const float4x4& rhs)
 {
-    float4x4 mtx44;
+    float4 result;
 
-    for (uint i = 0; i < 4; ++i)
+    for (uint i = 0; i < 4; i++)
     {
-        for (uint j = 0; j < 4; ++j)
+        float value = 0.0f;
+        for (uint j = 0; j < 4; j++)
         {
-            mtx44[i][j] = rhs[i][j] / lhs[j];
+            value += rhs[i][j] / lhs[j];
         }
+        result[i] = value;
     }
 
-    return mtx44;
+    return result;
 }
 
 bool operator!=(const float4x4 &lhs, const float4x4 &rhs)
@@ -906,5 +928,5 @@ std::ostream &operator<<(std::ostream &os, const float4x4 &value)
 
 std::istream &operator>>(std::istream &is, float4x4 &value)
 {
-
+    return is;
 }

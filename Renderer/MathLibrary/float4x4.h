@@ -14,6 +14,8 @@ public:
     float4x4(const float4& v1, const float4& v2, const float4& v3, const float4& v4);
     ~float4x4();
 
+    float3 GetPosition();
+
     void Zero();
     void Identity();
 
@@ -67,11 +69,11 @@ float4x4 operator*(const float4x4 &lhs, const float &rhs);
 float4x4 operator*(const float &lhs, const float4x4 &rhs);
 float4x4 operator/(const float4x4 &lhs, const float &rhs);
 
-float4x4 operator*(const float4x4& lhs, const float3& rhs);
-float4x4 operator*(const float3& lhs, const float4x4& rhs);
-float4x4 operator/(const float4x4& lhs, const float3& rhs);
-float4x4 operator/(const float3& lhs, const float4x4& rhs);
-float4x4 operator*(const float4x4& lhs, const float4& rhs);
-float4x4 operator*(const float4& lhs, const float4x4& rhs);
-float4x4 operator/(const float4x4& lhs, const float4& rhs);
-float4x4 operator/(const float4& lhs, const float4x4& rhs);
+float4 operator*(const float4x4& lhs, const float3& rhs);
+float4 operator*(const float3& lhs, const float4x4& rhs);
+float4 operator/(const float4x4& lhs, const float3& rhs);
+float4 operator/(const float3& lhs, const float4x4& rhs);
+float4 operator*(const float4x4& lhs, const float4& rhs);
+float4 operator*(const float4& lhs, const float4x4& rhs);
+float4 operator/(const float4x4& lhs, const float4& rhs);
+float4 operator/(const float4& lhs, const float4x4& rhs);
