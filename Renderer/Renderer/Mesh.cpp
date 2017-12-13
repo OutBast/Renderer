@@ -142,19 +142,19 @@ void Mesh::LoadMesh(const std::string &fileName, const float &scale)
         }
 
         //TEXTURES
-        //if (mtlFileTokens[i] == "map_Ka")
-        //{
-        //    currentMat->AmbientTexture(Texture(mtlFileTokens[i + 1], mappingTechniqueType, scale));
-        //    i += 2;
-        //}
-        //if (mtlFileTokens[i] == "map_Kd")
-        //{
-        //    currentMat->DiffuseTexture(Texture(mtlFileTokens[i + 1], mappingTechniqueType, scale));
-        //    i += 2;
-        //}
+        if (mtlFileTokens[i] == "map_Ka")
+        {
+            currentMat->AmbientTexture(Texture(512, 512, mtlFileTokens[i + 1]));
+            i += 2;
+        }
+        if (mtlFileTokens[i] == "map_Kd")
+        {
+            currentMat->DiffuseTexture(Texture(512, 512, mtlFileTokens[i + 1]));
+            i += 2;
+        }
         //if (mtlFileTokens[i] == "map_Ks")
         //{
-        //    currentMat->SpecularTexture(Texture(mtlFileTokens[i + 1], mappingTechniqueType, scale));
+        //    currentMat->SpecularTexture(Texture(512, 512, mtlFileTokens[i + 1]));
         //    i += 2;
         //}
 
@@ -235,7 +235,7 @@ void Mesh::LoadMesh(const std::string &fileName, const float &scale)
             int index7 = stoi(sub) - 1;
 
             //polygons.push_back(Triangle(vertices[index1], vertices[index2], vertices[index3], normals[index4], *currentMat));
-            polygons.push_back(Triangle(vertices[index1], vertices[index2], vertices[index3], normals[index4], *currentMat, textureCoord[index5], textureCoord[index6], textureCoord[index7]));
+            polygons.push_back(Triangle(vertices[index2], vertices[index1], vertices[index3], normals[index4], *currentMat, textureCoord[index5], textureCoord[index6], textureCoord[index7]));
             i += 4;
             continue;
         }
@@ -300,8 +300,7 @@ void Mesh::Draw(Rasterizer& r, VertexProcessor& vp)
 {
     for (auto &triangle : polygons)
     {
-        r.Triangle(vp.tr(triangle[0]), vp.tr(triangle[1]), vp.tr(triangle[2]),
-            float3(1.0f, 0.0f, 0.0f), float3(0.0f, 1.0f, 0.0f), float3(0.0f, 0.0f, 1.0f));
+        triangle.Draw(r, vp);
     }
 }
 

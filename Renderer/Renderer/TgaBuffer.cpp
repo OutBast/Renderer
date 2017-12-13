@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "TgaBuffer.h"
+#include "Texture.h"
 
 
 TgaBuffer::TgaBuffer() : Buffer()
@@ -32,4 +33,32 @@ void TgaBuffer::Save(const string file_name)
     fwrite(m_Color.data(), 4, m_Length, tga_file);
 
     fclose(tga_file);
+}
+
+bool TgaBuffer::LoadTexture(const std::string& filename)
+{
+    SetHeader();
+
+    FILE *f;
+    fopen_s(&f, filename.c_str(), "rb+");
+    if (!f) return false;
+
+    fread(m_Header, sizeof(unsigned short), 9, f);
+
+    int width = m_Header[6];
+    int height = m_Header[7];
+    int len = width * height;
+    unsigned int * texBuffer = new unsigned int[len];
+
+    fread(texBuffer, sizeof(unsigned int), len, f);
+
+    //Texture *txt = new Texture{ width, height, textureName };
+    for (int i = 0; i < len; ++i)
+    {
+        m_Color[i] = texBuffer[i];
+    }
+
+    fclose(f);
+
+    return true;
 }

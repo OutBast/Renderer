@@ -33,6 +33,7 @@ public:
 
     std::vector<Triangle> polygons;
     std::vector<float3> vertices;
+    std::vector<Vertex> verticesVertex;
     std::vector<float3> textureCoord;
     std::vector<float3> normals;
     std::vector<Material> materials;

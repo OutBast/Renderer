@@ -3,6 +3,8 @@
 #include "float4.h"
 
 
+float4 float4::zero = float4(0.0f, 0.0f, 0.0f, 0.0f);
+
 float4::float4() : x(0.0f), y(0.0f), z(0.0f), w(1.0f)
 { }
 
@@ -32,6 +34,11 @@ float float4::Dot(float4 &a, float4 &b)
 float float4::Dot(float4 &rhs)
 {
     return ((x * rhs.x) + (y * rhs.y) + (z * rhs.z) + (w * rhs.w));
+}
+
+float float4::Dot(float4 &a, const float4 &b)
+{
+    return ((a.X() * b.X()) + (a.Y() * b.Y()) + (a.Z() * b.Z()) + (a.W() * b.W()));
 }
 
 float4& float4::operator-=(const float4 &rhs)

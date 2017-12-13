@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "VertexProcessor.h"
+#include "Data.h"
 
 
 VertexProcessor::VertexProcessor() : 
@@ -23,31 +24,63 @@ float3 VertexProcessor::tr(const float3& position)
     return float3(result.x, result.y, result.z) / result.w;
 }
 
-float3 VertexProcessor::lt()
+Vertex VertexProcessor::tr(const Vertex& v)
 {
-    return float3::zero;
+    Vertex res{ v };
+
+    res.position = tr(v.position);
+
+    return res;
+}
+
+float3 VertexProcessor::lt(const Vertex & v, const Material& mat)
+{
+    float3 col{};
+    float3 n{ v.normal };
+    float3 tex{ 1,1,1 };
+
+    n.Normalize();
+
+    for (auto * light : Data::Instance().getLights())
+    {
+        float3 res{};
+        float3 spec{};
+        float zmienna = float3::Dot(n, light->Dir());
+        float intensity = std::max(zmienna, 0.f);
+
+        if (intensity > 0.f)
+        {
+            float3 eye = v.position.Normalized();
+            float3 h = (eye - light->Dir()).Normalized();
+
+            float intSpec = std::max(float3::Dot(h, n), 0.f);
+            spec = mat.ColorSpecular() * pow(intSpec, mat.Ns());
+            spec *= light->Specular();
+        }
+        float3 diff = tex * (float3)mat.ColorDiffuse();
+
+        res = intensity * light->Color() * diff + spec;
+
+        ClampColor(res);
+
+        col += res;
+    }
+
+    col += Data::Instance().getAmbientLight() * (float3)mat.ColorAmbient() * tex;
+
+    ClampColor(col);
+
+    return col;
 }
 
 void VertexProcessor::SetPerspective(float fov, float aspect, float z_near, float z_far)
 {
-    fov *= M_PI / 360.0f;
-    float f = cos(fov) / sin(fov);
-    view2proj[0] = float4(f / aspect, 0.0f, 0.0f, 0.0f);
-    view2proj[1] = float4(0.0f, f, 0.0f, 0.0f);
-    view2proj[2] = float4(0.0f, 0.0f, (z_far + z_near) / (z_near - z_far), -1.0f);
-    view2proj[3] = float4(0.0f, 0.0f, 2.0f * z_far * z_near / (z_near - z_far), 0.0f);
+    view2proj = float4x4::createPerspective(fov, aspect, z_near, z_far);
 }
 
 void VertexProcessor::SetLookAt(const float3& eye, const float3& target, const float3& up)
 {
-    float3 f = target - eye;
-    f.Normalized();
-    float3 s = float3::Cross(f, up);
-    float3 u = float3::Cross(s, f);
-    world2view[0] = float4(s[0], u[0], -f[0], 0);
-    world2view[1] = float4(s[1], u[1], -f[1], 0);
-    world2view[2] = float4(s[2], u[2], -f[2], 0);
-    world2view[3] = float4(-eye);
+    world2view = float4x4::createLookAt(eye, target, up);
 }
 
 void VertexProcessor::SetIdentity()
@@ -57,20 +90,17 @@ void VertexProcessor::SetIdentity()
 
 void VertexProcessor::Translate(const float3& v)
 {
-    float4x4 mtx44 = obj2world;
-    obj2world = mtx44.Translate(v);
+    obj2world = float4x4::createTranslation(v) * obj2world;
 }
 
 void VertexProcessor::Rotate(const float3& axis, float angle)
 {
-    float4x4 mtx44 = obj2world;
-    obj2world = mtx44.Rotation(axis, angle);
+    obj2world = float4x4::createRotation(DegreesToRadians(angle), axis) * obj2world;
 }
 
 void VertexProcessor::Scale(const float3& scale)
 {
-    float4x4 mtx44 = obj2world;
-    obj2world *= mtx44.Scale(scale);
+    obj2world = float4x4::createScale(scale) * obj2world;
 }
 
 void VertexProcessor::calculateFinalMatrixAkaTransform()

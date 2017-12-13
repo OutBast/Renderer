@@ -1,6 +1,7 @@
 #pragma once
 
 #include "float3.h"
+#include "Texture.h"
 
 enum class MaterialType
 {
@@ -44,12 +45,12 @@ public:
     void Tf(float3 val) { m_Tf = val; }
     float Illum() const { return illum; }
     void Illum(float val) { illum = val; }
-    //Texture AmbientTexture() const { return ambientTexture; }
-    //void AmbientTexture(Texture val) { ambientTexture = val; }
-    //Texture DiffuseTexture() const { return diffuseTexture; }
-    //void DiffuseTexture(Texture val) { diffuseTexture = val; }
-    //Texture SpecularTexture() const { return specularTexture; }
-    //void SpecularTexture(Texture val) { specularTexture = val; }
+    Texture AmbientTexture() const { return ambientTexture; }
+    void AmbientTexture(Texture val) { ambientTexture = val; }
+    Texture DiffuseTexture() const { return diffuseTexture; }
+    void DiffuseTexture(Texture val) { diffuseTexture = val; }
+    Texture SpecularTexture() const { return specularTexture; }
+    void SpecularTexture(Texture val) { specularTexture = val; }
     float N() const { return m_n; }
     void N(float val) { m_n = val; }
     MaterialType TypeOfMaterial() const { return typeOfMaterial; }
@@ -70,9 +71,9 @@ private:
     float m_Tr;
     float3 m_Tf;
     float illum;
-    //Texture ambientTexture;
-    //Texture diffuseTexture;
-    //Texture specularTexture;
+    Texture ambientTexture;
+    Texture diffuseTexture;
+    Texture specularTexture;
 
 
     float m_n;

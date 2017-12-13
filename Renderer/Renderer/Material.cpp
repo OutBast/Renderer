@@ -47,9 +47,9 @@ Material::Material(const Material &newMaterial) :
     m_Tr(newMaterial.Tr()),
     m_Tf(newMaterial.Tf()),
     illum(newMaterial.Illum()),
-    //ambientTexture(newMaterial.AmbientTexture()),
-    //diffuseTexture(newMaterial.DiffuseTexture()),
-    //specularTexture(newMaterial.SpecularTexture()),
+    ambientTexture(newMaterial.AmbientTexture()),
+    diffuseTexture(newMaterial.DiffuseTexture()),
+    specularTexture(newMaterial.SpecularTexture()),
     typeOfMaterial(newMaterial.TypeOfMaterial()),
     diffuseReflectionCoefficient(newMaterial.DiffuseReflectionCoefficient()),
     specularReflectionCoefficient(newMaterial.SpecularReflectionCoefficient())
@@ -72,9 +72,9 @@ Material& Material::operator=(const Material &rhs)
     m_Tr = rhs.Tr();
     m_Tf = rhs.Tf();
     illum = rhs.Illum();
-    //ambientTexture = rhs.AmbientTexture();
-    //diffuseTexture = rhs.DiffuseTexture();
-    //specularTexture = rhs.SpecularTexture();
+    ambientTexture = rhs.AmbientTexture();
+    diffuseTexture = rhs.DiffuseTexture();
+    specularTexture = rhs.SpecularTexture();
     typeOfMaterial = rhs.TypeOfMaterial();
     diffuseReflectionCoefficient = rhs.DiffuseReflectionCoefficient();
     specularReflectionCoefficient = rhs.SpecularReflectionCoefficient();

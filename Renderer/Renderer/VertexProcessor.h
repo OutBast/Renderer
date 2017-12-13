@@ -1,4 +1,6 @@
 #pragma once
+#include "Vertex.h"
+#include "Material.h"
 class VertexProcessor
 {
 public:
@@ -6,7 +8,9 @@ public:
     ~VertexProcessor();
 
     float3 tr(const float3& position);
-    float3 lt();
+    Vertex tr(const Vertex& v);
+    //Vertex lt(const Vertex& f);
+    float3 lt(const Vertex& v, const Material& mat);
 
     void SetPerspective(float fov, float aspect, float near, float z_far);
     void SetLookAt(const float3& eye, const float3& target, const float3& up);

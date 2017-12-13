@@ -1,4 +1,5 @@
 #pragma once
+class float4;
 
 class float3
 {
@@ -32,7 +33,8 @@ public:
 	float3(float x, float y);
 	float3(float x, float y, float z);
 	float3(int x, int y, int z);
-	float3(const float3 &value);
+    float3(const float3 &value);
+    float3(const float4 &value);
 	~float3();
 
 	float Angle(float3 &rhs);
@@ -43,7 +45,8 @@ public:
 	float Dot(float3 &rhs);
 	float3 Cross(float3 &rhs);
 	void Normalize();
-	float3 Normalized();
+    float3 Normalized();
+    float3 Normalized() const;
 	float3 Reflect(float3 &normal);
 	void Reverse();
 	void Scale(float3 scale);
@@ -83,7 +86,7 @@ public:
 	float V(int index) const { if(index >= 0 && index < 3) return v[index]; }
 	void V(float val, int index) { if (index >= 0 && index < 3) v[index] = val; }
 #pragma endregion Getters & Setters
-private:
+
 	union
 	{
 		struct

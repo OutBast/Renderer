@@ -5,6 +5,8 @@ class float3;
 class float4
 {
 public:
+    static float4 zero;
+
     float4();
     float4(float value);
     float4(float x, float y, float z);
@@ -15,6 +17,7 @@ public:
 
 
     static float Dot(float4 &a, float4 &b);
+    static float Dot(float4 &a, const float4 &b);
     float Dot(float4 &rhs);
 
 #pragma region Overloaded Operators

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Primitive.h"
+#include "Rasterizer.h"
 
 class Triangle :
     public Primitive
@@ -29,6 +30,7 @@ public:
 
     std::array<float3, 3> VerticesUVW() const { return verticesUVW; }
     void VerticesUVW(std::array<float3, 3> val) { verticesUVW = val; }
+    void Draw(Rasterizer& r, VertexProcessor& vp);
 private:
     float3 normal;
     std::array<float3, 3> vertices;

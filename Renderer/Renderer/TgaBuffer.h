@@ -11,6 +11,7 @@ public:
     ~TgaBuffer();
 
     void Save(const string file_name) override;
+    bool LoadTexture(const std::string& filename);
 
 private:
     void SetHeader();

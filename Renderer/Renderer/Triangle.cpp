@@ -85,6 +85,17 @@ Primitive* Triangle::Clone() const
     return new Triangle(*this);
 }
 
+void Triangle::Draw(Rasterizer& r, VertexProcessor& vp)
+{
+    r.Triangle(
+        vp,
+        vp.tr(vertices[0]), vp.tr(vertices[1]), vp.tr(vertices[2]),
+        verticesUVW[0], verticesUVW[1], verticesUVW[2],
+        normal, normal, normal,
+        material
+    );
+}
+
 std::ostream &operator<<(std::ostream &os, const Triangle &value)
 {
     os << "Triagle - v1: " << value.Vertices()[0] << ", v2: " << value.Vertices()[1] << ", v3: " << value.Vertices()[2] << endl;

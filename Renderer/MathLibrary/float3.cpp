@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "float3.h"
+#include "float4.h"
 
 float3 float3::back = float3(0, 0, -1);
 float3 float3::down = float3(0, -1, 0);
@@ -44,6 +45,9 @@ float3::float3(float x) :
 {
 
 }
+
+float3::float3(const float4 &value) : x(value.x), y(value.y), z(value.z)
+{ }
 
 float3::~float3()
 { }
@@ -138,6 +142,11 @@ float3 float3::Reverse(const float3 &value)
 float3 float3::Normalized()
 {
 	return Normalize(*this);
+}
+
+float3 float3::Normalized() const
+{
+    return Normalize(*this);
 }
 
 void float3::Scale(float3 scale)

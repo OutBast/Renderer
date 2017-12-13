@@ -53,7 +53,7 @@ void Buffer::ClearDepth()
 {
     for (auto& pixel : m_Depth)
     {
-        pixel = -1.0f;
+        pixel = 1.0f;
     }
 }
 
